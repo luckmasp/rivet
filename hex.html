@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <body>
+  <style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #c68ea1;
+    background-image: radial-gradient(circle, #ffdef1 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-attachment: fixed;
+  }
+
+  .header {
+    width: 100%;
+    max-width: 900px;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .header img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+
+  .content {
+    width: 100%;
+    max-width: 900px;
+    margin-top: 30px;
+    padding: 30px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .palette {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 15px;
+  }
+
+  .color-box {
+    flex: 1;
+    height: 150px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 10px;
+    color: #000;
+    font-weight: bold;
+    background: #fff;
+    border: 1px solid #00000022;
+  }
+
+  .generate-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #aa9549;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  a {
+    color: #7A4419;
+  }
+  </style>
+
+  <div class="header">
+  </div>
+
+  <div class="content">
+    <h1>Hex Palette Generator</h1>
+    <p>Click the button to generate a set of 3 matching colors!</p>
+    <p>These palettes are designed (hopefully) to look good together.</p>
+
+    <div class="palette" id="palette">
+      <div class="color-box" id="c1">#000000</div>
+      <div class="color-box" id="c2">#000000</div>
+      <div class="color-box" id="c3">#000000</div>
+    </div>
+
+    <button class="generate-btn" onclick="generatePalette()">Generate Palette</button>
+
+    <p style="margin-top:20px;">Time to go back? <a href="https://joshahi.neocities.org">Click me to return.</a></p>
+  </div>
+
+<script>
+function randomHex() {
+  return Math.floor(Math.random() * 256);
+}
+
+function toHex(v) {
+  return v.toString(16).padStart(2, "0");
+}
+
+function generatePalette() {
+  let baseR = randomHex();
+  let baseG = randomHex();
+  let baseB = randomHex();
+
+  let colors = [
+    [baseR, baseG, baseB],
+    [Math.min(baseR + 40, 255), Math.min(baseG + 40, 255), Math.min(baseB + 40, 255)],
+    [Math.max(baseR - 40, 0), Math.max(baseG - 40, 0), Math.max(baseB - 40, 0)]
+  ];
+
+  colors.forEach((rgb, i) => {
+    let hex = "#" + toHex(rgb[0]) + toHex(rgb[1]) + toHex(rgb[2]);
+    let box = document.getElementById("c" + (i + 1));
+    box.style.background = hex;
+    box.textContent = hex;
+  });
+}
+
+generatePalette();
+</script>
+
+  </body>
+</html>
